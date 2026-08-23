@@ -30,7 +30,7 @@ export function Explainability() {
                 <Badge tone="amber" dot pulse>Pending</Badge>
                 <span className="text-[12px] font-medium text-sub">{rec.scope} · Block RS005 (Kota–Agra)</span>
               </div>
-              <p className="mt-2 text-[15px] font-semibold leading-snug text-ink">{rec.body}</p>
+              <p className="mt-2 text-[18px] font-semibold leading-snug text-ink">{rec.title}</p>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line md:w-[300px]">
@@ -66,7 +66,6 @@ export function Explainability() {
                     <span className="text-[12px] font-bold text-brand">{inp.weight}%</span>
                   </div>
                   <div className="mt-2"><Progress value={inp.weight * 4} tone="blue" /></div>
-                  <div className="mt-1.5 text-[11px] text-sub">{inp.note}</div>
                 </motion.div>
               );
             })}
@@ -117,7 +116,6 @@ export function Explainability() {
                     <span className="text-[13.5px] font-semibold text-ink">{r.text}</span>
                     {i === reasoning.length - 1 && <Badge tone="green" dot>Optimal</Badge>}
                   </div>
-                  <p className="mt-0.5 text-[12.5px] text-sub">{r.detail}</p>
                 </div>
                 {i < reasoning.length - 1 && <ArrowRight className="absolute -bottom-1 left-3.5 h-3 w-3 rotate-90 text-line-strong sm:left-[20px]" />}
               </motion.div>
