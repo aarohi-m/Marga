@@ -59,31 +59,36 @@ export function Operations() {
                   <tr className="border-b border-line text-left text-[11px] uppercase tracking-wide text-faint">
                     <th className="px-4 py-2.5 font-semibold">Train</th>
                     <th className="px-3 py-2.5 font-semibold">Status</th>
-                    <th className="px-3 py-2.5 font-semibold">Current Station</th>
+                    <th className="px-3 py-2.5 font-semibold">Location</th>
                     <th className="px-3 py-2.5 text-right font-semibold">Speed</th>
                     <th className="px-3 py-2.5 text-right font-semibold">Delay</th>
-                    <th className="px-3 py-2.5 font-semibold">Next Station</th>
-                    <th className="px-3 py-2.5 text-right font-semibold">ETA</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {trains.map((t) => (
-                    <tr key={t.no} className="border-b border-line-soft transition-colors last:border-0 hover:bg-cream">
+                  {trains.slice(0, 5).map((t, i) => (
+                    <motion.tr
+                      key={t.no}
+                      initial={{ opacity: 0, x: -15 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.08, ease: "easeOut" }}
+                      className="border-b border-line-soft transition-colors last:border-0 hover:bg-cream"
+                    >
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2 font-semibold text-ink">{t.no}</div>
                         <div className="text-[11.5px] text-sub">{t.name}</div>
                       </td>
                       <td className="px-3 py-3"><StatusPill status={t.status} /></td>
-                      <td className="px-3 py-3 text-ink-soft">{t.station}</td>
-                      <td className="px-3 py-3 text-right tabular-nums text-ink-soft">{t.speed}</td>
+                      <td className="px-3 py-3">
+                        <div className="font-medium text-ink-soft">{t.station}</div>
+                        <div className="text-[11.5px] text-sub">→ {t.next} at {t.eta}</div>
+                      </td>
+                      <td className="px-3 py-3 text-right tabular-nums text-ink-soft">{t.speed} km/h</td>
                       <td className="px-3 py-3 text-right">
                         <span className={cn("font-semibold tabular-nums", t.delay > 15 ? "text-critical" : t.delay > 0 ? "text-warning" : "text-success")}>
                           {t.delay > 0 ? `+${t.delay}m` : "On time"}
                         </span>
                       </td>
-                      <td className="px-3 py-3 text-ink-soft">{t.next}</td>
-                      <td className="px-3 py-3 text-right tabular-nums text-ink-soft">{t.eta}</td>
-                    </tr>
+                    </motion.tr>
                   ))}
                 </tbody>
               </table>
@@ -101,8 +106,14 @@ export function Operations() {
             </Badge>
           </div>
 
-          {recs.map((rec) => (
-            <div key={rec.id} className="space-y-2.5">
+          {recs.slice(0, 2).map((rec, i) => (
+            <motion.div
+              key={rec.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.1, ease: "easeOut" }}
+              className="space-y-2.5"
+            >
               <RecommendationCard scope={rec.scope} title={rec.title} body={rec.body} confidence={rec.confidence} delay={rec.delay} affected={rec.affected} status={rec.status === "pending" ? "Pending" : rec.status === "accepted" ? "Accepted" : "Pending"} />
               <div className="flex gap-2">
                 <Button variant="secondary" size="sm" className="flex-1" onClick={() => navigate("explainability")}>
@@ -129,7 +140,7 @@ export function Operations() {
                   Accept
                 </Button>
               </div>
-            </div>
+            </motion.div>
           ))}
 
           <Card className="p-3">
